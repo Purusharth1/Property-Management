@@ -15,7 +15,7 @@ This is a Property Management System built using Flask for the backend, Bootstra
 
 1. Clone this repository:
    ```
-   git clone https://github.com/your-username/property-management-system.git
+   git clone https:https://github.com/Purusharth1/Property-Management.git
    ```
 
 2. Create a virtual environment and activate it:
