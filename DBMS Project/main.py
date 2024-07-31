@@ -23,7 +23,7 @@ def load_user(user_id):
     return User_table.query.get(int(user_id))
 
 
-app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:Aditya164*@localhost:5432/Property_Management'
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://<username>:<password>@<host_name>:<port>/<database_name>'
 db=SQLAlchemy(app)
 
 
