@@ -3,6 +3,10 @@ This is a Property Management Database project which aims to handle data related
 
 This is a Property Management System built using Flask for the backend, Bootstrap for the frontend, and PostgreSQL for the database.
 
+## Database Configuration
+
+This application uses SQLAlchemy for database management, connecting to a PostgreSQL database. The connection details are specified in the `SQLALCHEMY_DATABASE_URI` configuration variable within the application.
+
 ## Features
 
 - **User Authentication**: Users can sign up, log in, and manage their properties.
@@ -19,12 +23,6 @@ This is a Property Management System built using Flask for the backend, Bootstra
    ```
 
 2. Setting Database URI:
-
-## Database Configuration
-
-This application uses SQLAlchemy for database management, connecting to a PostgreSQL database. The connection details are specified in the `SQLALCHEMY_DATABASE_URI` configuration variable within the application.
-
-### Setting Up the Database URI
 
 The `SQLALCHEMY_DATABASE_URI` is structured as follows:
 
