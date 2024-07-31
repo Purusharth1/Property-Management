@@ -18,12 +18,32 @@ This is a Property Management System built using Flask for the backend, Bootstra
    git clone https:https://github.com/Purusharth1/Property-Management.git
    ```
 
-2. Create a virtual environment and activate it:
-   ```
-   cd property-management-system
-   python -m venv venv
-   source venv/bin/activate
-   ```
+2. ## Database Configuration
+
+This application uses SQLAlchemy for database management, connecting to a PostgreSQL database. The connection details are specified in the `SQLALCHEMY_DATABASE_URI` configuration variable within the application.
+
+### Setting Up the Database URI
+
+The `SQLALCHEMY_DATABASE_URI` is structured as follows:
+
+```
+postgresql://<username>:<password>@<host_name>:<port>/<database_name>
+```
+
+- **`<username>`**: The username required to authenticate with the PostgreSQL database.
+- **`<password>`**: The password associated with the database user.
+- **`<host_name>`**: The host name or IP address of the PostgreSQL server.
+- **`<port>`**: The port on which the PostgreSQL server is listening (default is usually `5432`).
+- **`<database_name>`**: The name of the database you want to connect to.
+
+### Example Configuration
+
+Here's an example of how the configuration might look in your `app.py` or `config.py` file:
+
+```python
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://myusername:mypassword@localhost:5432/mydatabase'
+```
+
 
 3. Install dependencies:
    ```
