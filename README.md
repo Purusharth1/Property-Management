@@ -18,7 +18,9 @@ This is a Property Management System built using Flask for the backend, Bootstra
    git clone https:https://github.com/Purusharth1/Property-Management.git
    ```
 
-2. ## Database Configuration
+2. Setting Database URI:
+
+   ## Database Configuration
 
 This application uses SQLAlchemy for database management, connecting to a PostgreSQL database. The connection details are specified in the `SQLALCHEMY_DATABASE_URI` configuration variable within the application.
 
