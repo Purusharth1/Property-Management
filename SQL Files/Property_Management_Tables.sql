@@ -61,5 +61,84 @@ CREATE TABLE MaintenanceRequest (
     FOREIGN KEY (Assigned_Contractor_ID) REFERENCES Contractor(Contractor_ID)
 );
 
+CREATE TABLE Property (
+    Property_ID INT PRIMARY KEY,
+    Address VARCHAR(255),
+    Size INT,
+    Type VARCHAR(255),
+    Market_Value DECIMAL(18, 2),
+    Built_Year INT,
+    Company_ID INT,
+    Landlord_ID INT,
+    Maintenance_Request_ID INT,
+    FOREIGN KEY (Company_ID) REFERENCES Company(Company_ID),
+    FOREIGN KEY (Landlord_ID) REFERENCES Landlord(Landlord_ID),
+    FOREIGN KEY (Maintenance_Request_ID) REFERENCES MaintenanceRequest(Maintenance_Request_ID)
+);
+
+
+-- Tenant table
+CREATE TABLE Tenant (
+    Tenant_ID INT PRIMARY KEY,
+    Name VARCHAR(255),
+    Age INT,
+    Gender VARCHAR(50),
+    Contact_Information VARCHAR(255),
+    Employment_Status VARCHAR(255),
+    Background_Check VARCHAR(255)
+);
+
+
+-- Lease table
+CREATE TABLE Lease (
+    Lease_ID INT PRIMARY KEY,
+    Property_ID INT,
+    Tenant_ID INT,
+    Lease_Start_Date DATE,
+    Lease_End_Date DATE,
+    Rent_Amount DECIMAL(18, 2),
+    Payment_History TEXT,
+    Lease_Status VARCHAR(255),
+    Renewal_Terms VARCHAR(255),
+    FOREIGN KEY (Property_ID) REFERENCES Property(Property_ID),
+    FOREIGN KEY (Tenant_ID) REFERENCES Tenant(Tenant_ID)
+);
+
+
+-- Payment table
+CREATE TABLE Payment (
+    Payment_ID INT PRIMARY KEY,
+    Lease_ID INT,
+    Payment_Date DATE,
+    Amount DECIMAL(18, 2),
+    Payment_Method VARCHAR(255),
+    Late_Fee DECIMAL(18, 2),
+    FOREIGN KEY (Lease_ID) REFERENCES Lease(Lease_ID)
+);
+
+
+-- Review table
+CREATE TABLE Review (
+    Review_ID INT PRIMARY KEY,
+    Tenant_ID INT,
+    Property_ID INT,
+    Rating INT,
+    Comment TEXT,
+    Date DATE,
+    FOREIGN KEY (Tenant_ID) REFERENCES Tenant(Tenant_ID),
+    FOREIGN KEY (Property_ID) REFERENCES Property(Property_ID)
+);
+
+
+-- InsurancePolicy table
+CREATE TABLE InsurancePolicy (
+    Policy_ID INT PRIMARY KEY,
+    Property_ID INT,
+    Coverage_Amount DECIMAL(18, 2),
+    Premium DECIMAL(18, 2),
+    Expiry_Date DATE,
+    Coverage_Type VARCHAR(255),
+    FOREIGN KEY (Property_ID) REFERENCES Property(Property_ID)
+);
 
 
