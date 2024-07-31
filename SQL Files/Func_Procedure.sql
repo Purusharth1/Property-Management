@@ -231,3 +231,71 @@ $$ LANGUAGE plpgsql;
 select GetEmployeeDetails(1)
 select * from employee; 
 
+
+CREATE OR REPLACE FUNCTION CalculateTotalRentDue(ten_id INT)
+RETURNS DECIMAL(18, 2) 
+AS $$
+DECLARE 
+    total_rent DECIMAL(18, 2);
+BEGIN
+    SELECT SUM(rent_due)
+    INTO total_rent
+    FROM (
+        SELECT (rent_amount+coalesce(sum(late_fee),0) - COALESCE(SUM(amount), 0)) AS rent_due
+        FROM Lease
+        LEFT JOIN Payment ON Lease.lease_id = Payment.lease_id
+        WHERE Lease.tenant_id = ten_id
+        GROUP BY Lease.lease_id
+    ) AS rent_due_per_lease;
+
+    RETURN total_rent;
+END
+$$ 
+LANGUAGE plpgsql;
+
+drop function CalculateTotalRentDue
+
+select CalculateTotalRentDue(4);
+
+
+CREATE OR REPLACE FUNCTION GetAvailableProperties(size_x INT, property_type VARCHAR(255), min_price DECIMAL(18, 2), max_price DECIMAL(18, 2))
+RETURNS TABLE (
+  property_id INT,
+  address VARCHAR(255),
+  size INT,
+  type VARCHAR(255),
+  market_value DECIMAL(18, 2),
+  landlord_name VARCHAR(255)
+) AS $$
+BEGIN
+  RETURN QUERY
+  SELECT p.property_id as property_id,p.address as address,p.size as size,p.type as type,p.market_value as market_value,l.name AS landlord_name
+  FROM Property p
+  LEFT JOIN Landlord l ON p.landlord_id = l.landlord_id
+  WHERE p.size >= $1
+    AND p.type = $2
+    AND p.market_value BETWEEN $3 AND $4
+    AND NOT EXISTS (
+      SELECT 1
+      FROM Lease
+      WHERE Lease.property_id = p.property_id
+      AND Lease.lease_end_date > CURRENT_DATE
+    );
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION AverageRatingForProperty(prop_id INT)
+RETURNS DECIMAL(18, 2)
+AS $$
+DECLARE avg_rating DECIMAL(18, 2);
+BEGIN
+    SELECT AVG(rating) INTO avg_rating
+    FROM Review
+    WHERE property_id = $1;
+    RETURN avg_rating;
+END
+$$ 
+LANGUAGE plpgsql;
+
+select AverageRatingForProperty(4);
