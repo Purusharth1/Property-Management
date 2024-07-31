@@ -54,7 +54,6 @@ select * from TenantReviews
 
 ----------------Indices---------------------
 
-
 --121--Company table
 CREATE INDEX idx_company_name ON Company (Name);
 
@@ -75,3 +74,22 @@ CREATE INDEX idx_property_address ON Property (Address);
 CREATE INDEX idx_property_type ON Property (Type);
 
 
+--126--Lease table
+CREATE INDEX idx_lease_property_id ON Lease (Property_ID);
+CREATE INDEX idx_lease_tenant_id ON Lease (Tenant_ID);
+CREATE INDEX idx_lease_status ON Lease (Lease_Status);
+
+--127--Tenant table
+CREATE INDEX idx_tenant_name ON Tenant (Name);
+
+--128--Payment table
+CREATE INDEX idx_payment_lease_id ON Payment (Lease_ID);
+CREATE INDEX idx_payment_date ON Payment (Payment_Date);
+
+--129--Review table
+CREATE INDEX idx_review_property_id ON Review (Property_ID);
+CREATE INDEX idx_review_tenant_id ON Review (Tenant_ID);
+
+--130--InsurancePolicy table
+CREATE INDEX idx_insurance_policy_property_id ON InsurancePolicy (Property_ID);
+CREATE INDEX idx_insurance_policy_expiry_date ON InsurancePolicy (Expiry_Date);
